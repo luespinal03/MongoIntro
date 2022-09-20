@@ -1,9 +1,111 @@
 # MongoIntro
+<!-- PART 1 -->
 
+
+<!-- Finds all -->
 db.BlogsDB.find({})
    .projection({})
    .sort({_id:-1})
    .limit(100)
+
+   <!-- Finds blogs by author -->
+db.BlogsDB.find({
+    author: {
+        $regex: /Brandi Feil/
+    }
+}) 
+.projection({})
+.sort({_id:-1})
+.limit(100)
+
+<!-- Finds objectID < 5 -->
+db.BlogsDB.find({
+    objectId: {
+        $gt: 5
+    }
+}) 
+.projection({})
+.sort({_id:-1})
+.limit(100)
+
+<!-- Finds all blogs whos createdAt is after April 1, 2022 -->
+db.posts.find({
+    createdAt: {
+        $gt: new Date("2022/04/01")
+    }
+
+<!-- PART 1 -->
+
+
+
+
+<!-- Part 2 -->
+
+<!-- Finds the ones that don't have lastModified -->
+db.BlogsDB.find({
+    lastModified: {
+        $exists: false
+    }
+}) 
+.projection({})
+.sort({_id:-1})
+.limit(100)
+
+<!-- Finds all blogs where the createdAt type is a date -->
+db.BlogsDB.find({
+    createdAt: {
+        $type: "date"
+    }
+})
+.projection({})
+.sort({_id:-1})
+.limit(100)
+
+<!-- Find all blogs in which lastModified does not exist and createdAt is the type date -->
+
+db.BlogsDB.find({
+    lastModified: {
+        $exists: false
+    },
+    createdAt: {
+        $type: "date"
+    }
+}) 
+.projection({})
+.sort({_id:-1})
+.limit(100)
+
+<!-- Finds a blog with a specific phrase (or a more complex regular expression if you want to practice $regrex) in the text -->
+
+db.BlogsDB.find({
+    text: {
+        $regex: /Tengo tanto drip que to parece el orinoco/
+    }
+}) 
+.projection({})
+.sort({_id:-1})
+.limit(100)
+
+<!-- Finds all blogs that have "qui" in the categories array -->
+
+db.BlogsDB.find({
+    categories: {
+        $in: ["qui"]
+    }
+}) 
+.projection({})
+.sort({_id:-1})
+.limit(100)
+
+
+
+
+
+
+
+
+
+
    
      const one = {
 	 createdAt: new Date("2022-04-16T06:33:29.080Z"),
