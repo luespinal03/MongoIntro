@@ -98,7 +98,57 @@ db.BlogsDB.find({
 .limit(100)
 
 
+<!-- Part 3 -->
 
+
+<!-- Finds all blogs in which lastModified does not exist and sets it -->
+db.BlogsDB.updateMany({
+    lastModified:{
+        $exists: false
+    }
+    },{
+    $set:{ 
+        lastModified: new Date()
+    }
+}) 
+
+
+<!-- Finds all blogs created after 2022 and adds "lorem" as a new category in the categories array -->
+
+db.BlogsDB.updateMany({
+    createdAt: {
+        $gt: new Date("2022/04")
+    }
+    },{
+    $addToSet : {
+        categories: "lorem"
+    }, $set: {
+        lastModified: new Date()
+    }
+}) 
+
+<!-- Finds all blogs with category "voluptas" and pulls it and updates last modified date -->
+
+db.BlogsDB.updateMany({
+    categories: {
+        $in: ["voluptas"]
+    }
+},{
+    $pull: {
+        categories: "voluptas"
+    }
+    , $set: {
+        lastModified: new Date()
+    }
+})
+
+<!-- Finds all blogs with "corrupti" in their categories and deltes that entire blog -->
+
+db.BlogsDB.deleteMany({
+    categories: {
+        $in: ["corrupti"]
+    }
+}) 
 
 
 
